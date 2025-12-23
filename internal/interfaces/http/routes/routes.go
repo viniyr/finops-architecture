@@ -7,7 +7,7 @@ import (
 	"github.com/go-chi/chi/v5/middleware"
 )
 
-func SetupRoutes() *chi.Mux {
+func SetupRoutes(h handlers.DisputeHandler) *chi.Mux {
 	r := chi.NewRouter()
 
 	r.Use(middleware.RequestID)
@@ -18,7 +18,7 @@ func SetupRoutes() *chi.Mux {
 	r.Get("/health", handlers.Health)
 
 	r.Route("/v1", func(r chi.Router) {
-		r.Post("/chargebacks", handlers.OpenChargeback)
+		r.Post("/disputes", h.OpenCardDispute)
 	})
 
 	return r
